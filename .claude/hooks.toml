@@ -1,0 +1,119 @@
+# Auto-format TypeScript/React files after editing
+[[hooks]]
+event = "PostToolUse"
+[hooks.matcher]
+tool_name = "edit_file"
+file_paths = ["*.ts", "*.tsx", "app/**/*.tsx", "components/**/*.tsx"]
+command = "prettier --write $CLAUDE_FILE_PATHS && eslint --fix $CLAUDE_FILE_PATHS"
+
+# Infrastructure changes with deployment monitoring
+[[hooks]]
+event = "PostToolUse"
+[hooks.matcher]
+tool_name = "edit_file"
+file_paths = ["amplify/data/resource.ts", "amplify/backend.ts"]
+command = '''
+echo "🔄 Infrastructure change detected - monitoring deployment..."
+# Stop existing sandbox
+pkill -f "ampx sandbox" || true
+sleep 2
+# Start sandbox with log file monitoring
+npx ampx sandbox --stream-function-logs true --logs-out-file ./logs/ampx.json &
+echo "📊 Monitoring logs at ./logs/ampx.json"
+echo "⏳ Deployment started - monitor with: tail -f ./logs/ampx.json"
+'''
+
+# Monitor deployment completion for infrastructure changes
+[[hooks]]
+event = "PostToolUse"
+run_in_background = true
+[hooks.matcher]
+tool_name = "edit_file"
+file_paths = ["amplify/data/resource.ts"]
+command = '''
+echo "⏳ Waiting for deployment completion..."
+timeout 300 bash -c '
+while true; do
+  if [ -f ./logs/ampx.json ]; then
+    if tail -n 10 ./logs/ampx.json | grep -q "Deployment completed\|GraphQL endpoint ready\|Successfully deployed"; then
+      echo "✅ Deployment successful! Types will auto-regenerate."
+      break
+    fi
+    if tail -n 10 ./logs/ampx.json | grep -q "ERROR\|FAILED\|ValidationException"; then
+      echo "❌ Deployment error detected - check logs:"
+      tail -n 20 ./logs/ampx.json | grep -A 5 -B 5 "ERROR\|FAILED"
+      echo "💡 Common fixes: Check resource naming, permissions, or rollback recent changes"
+      break
+    fi
+  fi
+  sleep 5
+done
+'
+'''
+
+# Auto-run tests after editing source files (but not during deployment)
+[[hooks]]
+event = "PostToolUse"
+run_in_background = true
+[hooks.matcher]
+tool_name = "edit_file"
+file_paths = ["app/**/*.tsx", "components/**/*.tsx"]
+command = '''
+# Only run tests if not actively deploying
+if ! pgrep -f "ampx sandbox" > /dev/null; then
+  npm test -- --related $CLAUDE_FILE_PATHS --passWithNoTests
+else
+  echo "⏸️  Tests deferred - deployment in progress"
+fi
+'''
+
+# GitHub issue integration - update issues with progress
+[[hooks]]
+event = "PostToolUse"
+[hooks.matcher]
+tool_name = "edit_file"
+command = '''
+ISSUE_NUM=$(git branch --show-current | grep -o '[0-9]\+' | head -1)
+if [ -n "$ISSUE_NUM" ]; then
+  if [[ "$CLAUDE_FILE_PATHS" == *"amplify/"* ]]; then
+    gh issue comment $ISSUE_NUM --body "⚡ Infrastructure updated: $CLAUDE_FILE_PATHS (deployment in progress)" 2>/dev/null || true
+  else
+    gh issue comment $ISSUE_NUM --body "✅ Progress: Updated $CLAUDE_FILE_PATHS" 2>/dev/null || true
+  fi
+fi
+'''
+
+# Quality gate with deployment awareness
+[[hooks]]
+event = "PreToolUse"
+[hooks.matcher]
+tool_name = "edit_file"
+file_paths = ["amplify/data/resource.ts"]
+command = '''
+if pgrep -f "ampx sandbox" > /dev/null; then
+  echo "⚠️  Active deployment detected. Consider waiting for completion before schema changes."
+  echo "   Check status with: tail -n 20 ./logs/ampx.json"
+fi
+BRANCH=$(git branch --show-current)
+if ! echo "$BRANCH" | grep -E "^(feature|fix|hotfix)/"; then
+  echo "💡 Recommendation: Create a feature branch with: git checkout -b feature/issue-{NUMBER}"
+fi
+'''
+
+# Development notifications with deployment context
+[[hooks]]
+event = "Notification"
+command = '''
+case "$CLAUDE_NOTIFICATION_TYPE" in
+  "permission")
+    echo "🔔 Claude is waiting for permission: $CLAUDE_NOTIFICATION"
+    ;;
+  "error")
+    echo "❌ Error: $CLAUDE_NOTIFICATION"
+    if [ -f ./logs/ampx.json ]; then
+      echo "📋 Recent deployment logs:"
+      tail -n 10 ./logs/ampx.json
+    fi
+    ;;
+esac
+'''
