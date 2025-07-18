@@ -7,6 +7,17 @@ This repository includes two GitHub Actions workflows for Claude Code integratio
 1. **`claude-code-integration.yml`** - Basic feature implementation
 2. **`claude-github-app.yml`** - Full GitHub App integration with multiple commands
 
+## ⚠️ Important: GitHub App Installation
+
+**GitHub App installation must be done manually outside of Claude Code sessions.**
+
+When Claude Code prompts you to install the GitHub App:
+1. **Exit Claude Code** session first
+2. **Run installation commands** in your terminal manually
+3. **Return to Claude Code** once installation is complete
+
+This ensures proper authentication and avoids CLI conflicts.
+
 ## Required Repository Secrets
 
 To enable the `@claude` comment workflow, you need to configure these repository secrets:

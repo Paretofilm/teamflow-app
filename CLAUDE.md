@@ -106,6 +106,16 @@ gh repo create Paretofilm/new-repo-name --public --description "Description"
 # When creating issues, PRs, or other resources, they will automatically use the organization context
 ```
 
+### GitHub App Installation (User Action Required)
+**Important**: GitHub App installation should be done manually outside of Claude Code:
+
+1. **When prompted**: Claude Code will tell you to install the GitHub App
+2. **Action Required**: You must manually run the installation command
+3. **Why**: Ensures proper authentication and avoids CLI conflicts
+4. **Command**: `gh auth login --web` (if needed) and follow GitHub App setup prompts
+
+**Do NOT attempt GitHub App installation within Claude Code sessions**
+
 ## GitHub Actions Integration
 
 ### Claude Code Automation

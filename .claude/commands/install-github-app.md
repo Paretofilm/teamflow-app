@@ -1,54 +1,58 @@
-You are setting up GitHub Actions integration for Claude Code with deployment-aware workflows.
+You are providing instructions for GitHub App installation that the user must complete manually outside of Claude Code.
+
+IMPORTANT: GitHub App installation should NOT be done within Claude Code sessions.
 
 CONTEXT AWARENESS:
 - This is a TeamFlow application built with AWS Amplify Gen 2
 - Deployment timing is critical (2-5 minutes for infrastructure changes)
-- Hooks automatically format code, run tests, and update GitHub issues
+- GitHub App installation requires manual user action for proper authentication
 - Integration should respect existing development workflow
 
-GITHUB ACTIONS SETUP PROCESS:
-1. RESEARCH THE CURRENT REPOSITORY STATE
-   - Check existing GitHub Actions workflows
-   - Review current branch structure and permissions
-   - Understand deployment patterns
+GITHUB APP INSTALLATION INSTRUCTIONS:
+1. **STOP CLAUDE CODE SESSION**: Exit Claude Code before proceeding
+2. **MANUAL INSTALLATION REQUIRED**: User must complete these steps outside Claude Code
+3. **AUTHENTICATION**: Ensures proper GitHub authentication and permissions
 
-2. CREATE COMPREHENSIVE GITHUB ACTIONS INTEGRATION:
-   - **claude-code-integration.yml** - Basic @claude implementation workflow
-   - **claude-github-app.yml** - Full GitHub App with multiple commands
-   - **SETUP.md** - Complete configuration and troubleshooting guide
+INSTRUCTIONS TO PROVIDE TO USER:
+```
+🚨 MANUAL ACTION REQUIRED - Please complete OUTSIDE of Claude Code:
 
-3. AVAILABLE @CLAUDE COMMANDS TO IMPLEMENT:
-   - `@claude implement this feature` - Automated feature implementation
-   - `@claude review` - Code review assistance and guidance
-   - `@claude test` - Testing guidance and implementation
-   - `@claude fix` - Debugging and issue resolution
-   - `@claude deploy` - Deployment status and guidance
+1. **Exit Claude Code**: Close this session first
+2. **Install GitHub App**: Run these commands in your terminal:
+   
+   gh auth login --web
+   
+   Follow the prompts to:
+   - Authenticate with GitHub
+   - Grant necessary permissions
+   - Install GitHub App for your organization
 
-4. DEPLOYMENT-AWARE FEATURES:
-   - Respect Amplify Gen 2 deployment timing (2-5 minutes)
-   - Handle schema changes and type regeneration
-   - Integrate with existing hooks and monitoring
-   - Create feature branches automatically
-   - Generate pull requests with detailed context
+3. **Verify Installation**:
+   gh auth status
+   gh repo view
 
-5. AUTOMATICALLY CREATE PULL REQUEST:
-   - Create feature branch for GitHub Actions setup
-   - Add all workflow files and documentation
-   - Create comprehensive PR with setup instructions
-   - Include testing strategy and integration benefits
+4. **Return to Claude Code**: Once installation is complete, you can resume
 
-WORKFLOW INTEGRATION:
-- Enable `@claude` comment automation in issues
-- Automatic branch creation and PR generation
-- Progress tracking and issue updates
-- Team collaboration through PR-based workflow
+⚠️  Do NOT attempt this installation within Claude Code sessions
+```
+
+WHEN TO PROVIDE THESE INSTRUCTIONS:
+- When user needs GitHub App functionality
+- When authentication errors occur
+- When repository permissions are insufficient
+- When prompted to install GitHub App
+
+FOLLOW-UP ACTIONS:
+- After user completes manual installation
+- Verify GitHub App is properly configured
+- Test GitHub CLI functionality
+- Resume normal Claude Code operations
 
 EXECUTE THIS WORKFLOW:
-1. Create GitHub Actions workflow files
-2. Add comprehensive documentation
-3. Update project documentation (CLAUDE.md)
-4. Create feature branch and commit changes
-5. Generate pull request with setup instructions
-6. Provide next steps for repository secrets configuration
+1. Detect need for GitHub App installation
+2. Provide clear manual installation instructions
+3. Instruct user to exit Claude Code session
+4. Wait for user to complete installation
+5. Resume with verification and testing
 
-The setup should be deployment-aware and integrate seamlessly with existing Amplify Gen 2 patterns.
+The user must complete GitHub App installation manually for proper authentication and functionality.
