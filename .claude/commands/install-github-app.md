@@ -26,14 +26,20 @@ INSTRUCTIONS TO PROVIDE TO USER:
    - Authenticate with GitHub
    - Grant necessary permissions
    - Install GitHub App for your organization
+   - **IMPORTANT**: The installation will automatically create workflow files
 
 3. **Verify Installation**:
    gh auth status
    gh repo view
+   ls .github/workflows/  # Check for auto-generated workflow files
 
 4. **Return to Claude Code**: Once installation is complete, you can resume
 
-⚠️  Do NOT attempt this installation within Claude Code sessions
+⚠️  CRITICAL NOTES:
+- Do NOT attempt this installation within Claude Code sessions
+- Do NOT modify workflow files BEFORE GitHub App installation
+- ONLY customize workflows AFTER successful installation
+- The installation creates proper workflow files automatically
 ```
 
 WHEN TO PROVIDE THESE INSTRUCTIONS:

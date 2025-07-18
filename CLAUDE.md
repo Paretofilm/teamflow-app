@@ -113,8 +113,14 @@ gh repo create Paretofilm/new-repo-name --public --description "Description"
 2. **Action Required**: You must manually run the installation command
 3. **Why**: Ensures proper authentication and avoids CLI conflicts
 4. **Command**: `gh auth login --web` (if needed) and follow GitHub App setup prompts
+5. **Automatic Workflow Creation**: The installation creates proper workflow files automatically
 
-**Do NOT attempt GitHub App installation within Claude Code sessions**
+**CRITICAL**: 
+- **Do NOT attempt GitHub App installation within Claude Code sessions**
+- **Do NOT modify workflow files BEFORE GitHub App installation**
+- **ONLY customize workflows AFTER successful GitHub App installation**
+
+The GitHub App installation automatically creates the correct workflow files with proper `anthropics/claude-code-action@beta` configuration.
 
 ## GitHub Actions Integration
 

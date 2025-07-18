@@ -2,32 +2,41 @@
 
 ## Overview
 
-This repository includes two GitHub Actions workflows for Claude Code integration:
+This repository will have GitHub Actions workflows for Claude Code integration once the GitHub App is properly installed.
 
-1. **`claude-code-integration.yml`** - Basic feature implementation
-2. **`claude-github-app.yml`** - Full GitHub App integration with multiple commands
+## ⚠️ CRITICAL: GitHub App Installation Order
 
-## ⚠️ Important: GitHub App Installation
+**GitHub App installation must be done manually outside of Claude Code sessions AND before any workflow modifications.**
 
-**GitHub App installation must be done manually outside of Claude Code sessions.**
-
-When Claude Code prompts you to install the GitHub App:
+### Correct Installation Order:
 1. **Exit Claude Code** session first
-2. **Run installation commands** in your terminal manually
-3. **Return to Claude Code** once installation is complete
+2. **Install GitHub App** manually in your terminal
+3. **Verify auto-generated workflow files** are created
+4. **Return to Claude Code** for any customizations
 
-This ensures proper authentication and avoids CLI conflicts.
+### What the Installation Creates:
+- Proper `claude.yml` workflow file with `anthropics/claude-code-action@beta`
+- Correct `CLAUDE_CODE_OAUTH_TOKEN` secret setup
+- All necessary permissions and configurations
+
+### ⚠️ DO NOT:
+- Modify workflow files BEFORE GitHub App installation
+- Attempt GitHub App installation within Claude Code sessions
+- Create workflow files manually - let the installation handle it
+
+This ensures proper authentication and working workflows.
 
 ## Required Repository Secrets
 
 To enable the `@claude` comment workflow, you need to configure these repository secrets:
 
-### 1. ANTHROPIC_API_KEY
-- **Purpose**: Enables Claude Code to authenticate with Anthropic's API
+### 1. CLAUDE_CODE_OAUTH_TOKEN
+- **Purpose**: Enables Claude Code GitHub Action to authenticate with Anthropic's API
 - **How to get**: 
   1. Go to https://console.anthropic.com/
   2. Create an API key
   3. Copy the key (starts with `sk-ant-api...`)
+- **Note**: This is the same API key, but the GitHub Action expects it as `CLAUDE_CODE_OAUTH_TOKEN`
 
 ### 2. GITHUB_TOKEN
 - **Purpose**: Automatically configured by GitHub Actions
