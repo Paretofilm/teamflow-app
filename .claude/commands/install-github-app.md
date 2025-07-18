@@ -15,31 +15,28 @@ GITHUB APP INSTALLATION INSTRUCTIONS:
 
 INSTRUCTIONS TO PROVIDE TO USER:
 ```
-🚨 MANUAL ACTION REQUIRED - Please complete OUTSIDE of Claude Code:
+✅ CLAUDE CODE GITHUB APP INSTALLATION:
 
-1. **Exit Claude Code**: Close this session first
-2. **Install GitHub App**: Run these commands in your terminal:
+The GitHub App installation is a built-in Claude Code command that should be run within Claude Code.
+
+1. **Run the installation command**: /install-github-app
    
-   gh auth login --web
-   
-   Follow the prompts to:
-   - Authenticate with GitHub
-   - Grant necessary permissions
-   - Install GitHub App for your organization
-   - **IMPORTANT**: The installation will automatically create workflow files
+   This will:
+   - Set up GitHub authentication
+   - Install the GitHub App for your organization
+   - Create proper workflow files automatically
+   - Configure necessary secrets
 
-3. **Verify Installation**:
-   gh auth status
-   gh repo view
-   ls .github/workflows/  # Check for auto-generated workflow files
+2. **Verify Installation**:
+   - Check that workflow files were created in .github/workflows/
+   - Verify the GitHub App is installed for your organization
+   - Test @claude functionality on an issue
 
-4. **Return to Claude Code**: Once installation is complete, you can resume
-
-⚠️  CRITICAL NOTES:
-- Do NOT attempt this installation within Claude Code sessions
-- Do NOT modify workflow files BEFORE GitHub App installation
-- ONLY customize workflows AFTER successful installation
+⚠️  IMPORTANT NOTES:
 - The installation creates proper workflow files automatically
+- Do NOT modify workflow files BEFORE running /install-github-app
+- ONLY customize workflows AFTER successful installation
+- The installation sets up the correct anthropics/claude-code-action@beta workflows
 ```
 
 WHEN TO PROVIDE THESE INSTRUCTIONS:

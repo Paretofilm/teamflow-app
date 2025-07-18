@@ -106,19 +106,19 @@ gh repo create Paretofilm/new-repo-name --public --description "Description"
 # When creating issues, PRs, or other resources, they will automatically use the organization context
 ```
 
-### GitHub App Installation (User Action Required)
-**Important**: GitHub App installation should be done manually outside of Claude Code:
+### GitHub App Installation (Built-in Command)
+**Important**: GitHub App installation is a built-in Claude Code command:
 
 1. **When prompted**: Claude Code will tell you to install the GitHub App
-2. **Action Required**: You must manually run the installation command
-3. **Why**: Ensures proper authentication and avoids CLI conflicts
-4. **Command**: `gh auth login --web` (if needed) and follow GitHub App setup prompts
+2. **Action Required**: Run the `/install-github-app` command within Claude Code
+3. **Why**: Sets up proper authentication and GitHub App integration
+4. **Command**: `/install-github-app` (built-in Claude Code command)
 5. **Automatic Workflow Creation**: The installation creates proper workflow files automatically
 
 **CRITICAL**: 
-- **Do NOT attempt GitHub App installation within Claude Code sessions**
-- **Do NOT modify workflow files BEFORE GitHub App installation**
+- **Do NOT modify workflow files BEFORE running `/install-github-app`**
 - **ONLY customize workflows AFTER successful GitHub App installation**
+- **The installation is done within Claude Code, not externally**
 
 The GitHub App installation automatically creates the correct workflow files with proper `anthropics/claude-code-action@beta` configuration.
 

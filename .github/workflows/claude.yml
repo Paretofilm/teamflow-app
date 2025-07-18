@@ -49,16 +49,41 @@ jobs:
           # Optional: Trigger when specific user is assigned to an issue
           # assignee_trigger: "claude-bot"
           
-          # Optional: Allow Claude to run specific commands
-          # allowed_tools: "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*)"
+          # Allow Claude to run Amplify and development commands
+          allowed_tools: "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*),Bash(npx amplify *),Bash(npx ampx *)"
           
-          # Optional: Add custom instructions for Claude to customize its behavior for your project
-          # custom_instructions: |
-          #   Follow our coding standards
-          #   Ensure all new code has tests
-          #   Use TypeScript for new files
+          # Custom instructions for TeamFlow Amplify Gen 2 project
+          custom_instructions: |
+            This is a TeamFlow application built with AWS Amplify Gen 2. Please follow these guidelines:
+            
+            DEPLOYMENT AWARENESS:
+            - Infrastructure changes take 2-5 minutes to deploy
+            - Schema changes trigger automatic type regeneration
+            - Frontend changes can proceed immediately
+            - Always check deployment status before major changes
+            
+            AMPLIFY GEN 2 PATTERNS:
+            - Use existing auth/resource.ts and data/resource.ts files
+            - Follow the established backend structure in amplify/ directory
+            - Respect the deployment-aware development workflow
+            - Use TypeScript for all new files
+            
+            ORGANIZATION:
+            - This is a Paretofilm organization project
+            - Target dev branch for development workflow
+            - Follow existing project structure and conventions
+            - Ensure all new code has appropriate tests
+            
+            COMMANDS:
+            - Use npx ampx sandbox for deployment
+            - Use npx amplify generate for type generation
+            - Respect existing hooks for formatting and testing
           
-          # Optional: Custom environment variables for Claude
-          # claude_env: |
-          #   NODE_ENV: test
+          # Target dev branch for development workflow
+          base_branch: "dev"
+          
+          # Custom environment variables for Amplify Gen 2
+          claude_env: |
+            NODE_ENV: development
+            AMPLIFY_ENV: sandbox
 
