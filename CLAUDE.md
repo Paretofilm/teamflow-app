@@ -58,3 +58,65 @@ teamflow-app/
 - TypeScript path mapping is configured for `$amplify/*` to reference generated types
 - Guest authorization is enabled on the Todo model for unauthenticated access
 - The project appears to be in early development stage with minimal implementation
+## Deployment-Aware Development Workflow
+
+This project uses Claude Code hooks with Amplify Gen 2 deployment awareness:
+
+### Active Hooks with Deployment Intelligence
+- **Auto-formatting**: TypeScript/React files formatted on every edit
+- **Deployment Monitoring**: Infrastructure changes trigger log monitoring
+- **Smart Testing**: Tests run when not actively deploying
+- **GitHub Integration**: Issues updated with deployment status
+- **Quality Gates**: Deployment-aware warnings and recommendations
+- **Error Handling**: Automatic deployment error detection and reporting
+
+### Amplify Gen 2 Deployment Behavior
+- Infrastructure changes: 2-5 minutes deployment time
+- Schema changes trigger automatic type regeneration
+- Frontend changes: Immediate (no deployment wait)
+- Log monitoring: All deployments tracked in ./logs/ampx.json
+- Hooks respect deployment timing and provide appropriate feedback
+
+### Realistic Development Timeline
+- Plan for deployment wait times in estimates
+- Infrastructure features: 10-15 minutes including deployment
+- Frontend-only features: Immediate development
+- Testing runs automatically when safe (not during deployment)
+
+### Error Recovery
+- Deployment errors automatically detected and reported
+- Common fixes suggested based on log analysis
+- Rollback strategies provided for failed deployments
+- Quality gates prevent deployment conflicts
+
+## GitHub Actions Integration
+
+### Claude Code Automation
+The project includes GitHub Actions workflows for automated feature implementation:
+
+**Workflow**: `.github/workflows/claude-code-integration.yml`
+- **Trigger**: `@claude implement this feature` comment on issues
+- **Action**: Automatically implements features using Claude Code
+- **Output**: Creates feature branch and pull request
+
+### Required Setup
+1. **Repository Secrets**: Add `ANTHROPIC_API_KEY` to GitHub repository secrets
+2. **Permissions**: Enable "Read and write permissions" for GitHub Actions
+3. **PR Creation**: Allow GitHub Actions to create pull requests
+
+### Usage Flow
+1. Create issue with `/project:feature-spec-deployment-aware [feature]`
+2. Comment `@claude implement this feature` on the issue
+3. GitHub Actions automatically:
+   - Creates feature branch (`feature/issue-{number}`)
+   - Implements the feature using Claude Code
+   - Creates pull request with implementation
+   - Updates issue with progress and links
+
+### Integration Benefits
+- **Deployment-Aware**: Respects Amplify Gen 2 deployment timing
+- **Automatic**: No manual Claude Code execution needed
+- **Traceable**: All implementations linked to issues and PRs
+- **Collaborative**: Team can review before merging
+
+See `.github/SETUP.md` for detailed configuration instructions.
