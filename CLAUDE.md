@@ -89,6 +89,23 @@ This project uses Claude Code hooks with Amplify Gen 2 deployment awareness:
 - Rollback strategies provided for failed deployments
 - Quality gates prevent deployment conflicts
 
+## Organization Configuration
+
+### Paretofilm Organization Setup
+**Default Organization**: All repositories should be created under the **Paretofilm** organization
+- **Repository Creation**: Use `gh repo create Paretofilm/repo-name` format
+- **Organization Context**: Always specify `--org Paretofilm` when applicable
+- **Team Access**: Repositories created under Paretofilm organization for team collaboration
+
+### GitHub CLI Configuration
+Ensure GitHub CLI commands use the Paretofilm organization:
+```bash
+# Create new repositories under Paretofilm organization
+gh repo create Paretofilm/new-repo-name --public --description "Description"
+
+# When creating issues, PRs, or other resources, they will automatically use the organization context
+```
+
 ## GitHub Actions Integration
 
 ### Claude Code Automation
