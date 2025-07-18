@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           
       - name: Install dependencies
@@ -32,7 +32,7 @@ jobs:
       - name: Setup Claude Code
         run: |
           # Install Claude Code CLI
-          npm install -g @anthropic/claude-code
+          npm install -g @anthropic/claude-cli
           
       - name: Get issue details
         id: issue
